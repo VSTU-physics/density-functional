@@ -1,0 +1,35 @@
+\documentclass[article]{ncc}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\renewcommand{\vec}{\boldsymbol}
+\title{Теория функционала плотности}
+\author{Абдрахманов В.}
+\begin{document}
+    \maketitle
+    \tableofcontents
+    \section{Уравнения Кона-Шема}
+    Согласно теории Хоэнберга-Кона, полная энергия системы является функционалом электронной плотности:
+    \begin{equation}
+        E[n] = T[n] + V[n].
+    \end{equation}
+    Основная идея состоит в представлении кинетической энергии в виде суммы:
+    \begin{equation}
+        T[n] = T_s[n] + V_H[n] + E_{xc}[n],
+    \end{equation}
+    \begin{equation}
+        T_s = \int \psi^*(\vec{r}) \left(-\frac{\nabla^2}{2}\right) \psi(\vec{r})\,d^3\vec{r},
+    \end{equation}
+    \begin{equation}
+        V_H = \frac{1}{2}\int\int \frac{n(\vec{r})n(\vec{r}')}{|\vec{r}' - \vec{r}|}\,d^3\vec{r}\,d^3\vec{r}',
+    \end{equation}
+    Энергия основного состояния является минимумом этого функционала. Проварьируем по электронной плотности:
+    \begin{align}
+        \delta E = & \int \delta\psi^*(\vec{r}) \left(-\frac{\nabla^2}{2}\right) \psi(\vec{r})\,d^3\vec{r} + \int \psi^*(\vec{r}) \left(-\frac{\nabla^2}{2}\right) \delta\psi(\vec{r})\,d^3\vec{r} +\\
+        + & \int\int \frac{n(\vec{r}')}{|\vec{r}' - \vec{r}|}\,d^3\vec{r}'\delta n\,d^3\vec{r} + \int v_{xc} \delta n\,d^3\vec{r} + \int v_{ext} \delta n\,d^3\vec{r}.
+    \end{align}
+    \begin{equation}
+        n = \psi\psi^*,\quad \delta n = \psi\delta\psi^* + \psi^*\delta\psi
+    \end{equation}
+    Откуда взять множитель Лагранжа?
+\end{document}
