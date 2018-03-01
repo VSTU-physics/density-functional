@@ -2,34 +2,61 @@
 \usepackage[russian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage{physics}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\phi}{\varphi}
 \renewcommand{\vec}{\boldsymbol}
 \title{Теория функционала плотности}
 \author{Абдрахманов В.}
 \begin{document}
     \maketitle
     \tableofcontents
-    \section{Уравнения Кона-Шема}
+    \section*{Обозначения}
+    В этом тексте используется атомная система единиц: $ \hbar = e = m_e = 1$
+    \begin{description}
+        \item[$n(\vec{r})$] электронная плотность
+    \end{description}
+    \section{Основные положения}
+    \subsection{Теория Хоэнберга-Кона}
+    \subsection{Уравнения Кона-Шема}
     Согласно теории Хоэнберга-Кона, полная энергия системы является функционалом электронной плотности:
     \begin{equation}
-        E[n] = T[n] + V[n].
+        E[n] = T[n] + U_{ee}[n] + V[n].
     \end{equation}
     Основная идея состоит в представлении кинетической энергии в виде суммы:
     \begin{equation}
-        T[n] = T_s[n] + V_H[n] + E_{xc}[n],
+        T[n] = T_s[n] + T_c[n],
+    \end{equation}
+    где \( T_s \) -- это кинетическая энергия системы невзаимодействующих электронов, а \( T_c \) содержит корреляционную часть кинетической энергии. Для \( T_s \) мы можем в явном виде выписать выражение
+    \begin{equation}
+        T_s = \int \Psi^*(\vec{r}_1, \ldots, \vec{r}_N) \left(-\frac{\nabla^2}{2}\right) \Psi(\vec{r}_1, \ldots, \vec{r}_N)\,d^3\vec{r}.
+    \end{equation}
+    Многоэлектронная волновая функция имеет вид
+    \begin{equation}
+        \Psi(\vec{r}_1, \ldots, \vec{r}_N) = \frac{1}{\sqrt{N!}}\det \phi_i(\vec{r}_j),
+    \end{equation}
+    откуда
+    \begin{equation}
+        T_s = \sum_{i}^N\expval{-\frac{\nabla^2}{2}}{\phi_i},
     \end{equation}
     \begin{equation}
-        T_s = \int \psi^*(\vec{r}) \left(-\frac{\nabla^2}{2}\right) \psi(\vec{r})\,d^3\vec{r},
+        n(\vec{r}) = \sum_{i}^N|\phi_i(\vec{r})|^2.
+    \end{equation}
+    Функционал взаимодействия электронов можно представить в виде
+    \begin{equation}
+        U_{ee} = V_H + V_x,
     \end{equation}
     \begin{equation}
-        V_H = \frac{1}{2}\int\int \frac{n(\vec{r})n(\vec{r}')}{|\vec{r}' - \vec{r}|}\,d^3\vec{r}\,d^3\vec{r}',
+        V_H = \frac{1}{2}\iint \frac{n(\vec{r})n(\vec{r}')}{|\vec{r}' - \vec{r}|}\,d^3\vec{r}\,d^3\vec{r}',
     \end{equation}
-    Энергия основного состояния является минимумом этого функционала. Проварьируем по электронной плотности:
-    \begin{align}
-        \delta E = & \int \delta\psi^*(\vec{r}) \left(-\frac{\nabla^2}{2}\right) \psi(\vec{r})\,d^3\vec{r} + \int \psi^*(\vec{r}) \left(-\frac{\nabla^2}{2}\right) \delta\psi(\vec{r})\,d^3\vec{r} +\\
-        + & \int\int \frac{n(\vec{r}')}{|\vec{r}' - \vec{r}|}\,d^3\vec{r}'\delta n\,d^3\vec{r} + \int v_{xc} \delta n\,d^3\vec{r} + \int v_{ext} \delta n\,d^3\vec{r}.
-    \end{align}
+    Для учёта корреляции и обмена не существует нормального выражения, поэтому функционал энергии представляют в виде
     \begin{equation}
-        n = \psi\psi^*,\quad \delta n = \psi\delta\psi^* + \psi^*\delta\psi
+        E[n] = T_s[n] + V[n] + V_H[n] + E_{xc}[n],
     \end{equation}
-    Откуда взять множитель Лагранжа?
+    где последнее слагаемое учитывает обмено-корреляционные эффекты и выбирается от балды.
+    
+    Минимизировать непосредственно функционал можно, но не очень удобно. Поэтому проварьируем его и получим уравнения Кона-Шема\footnote{Как математически корректно сделать переход? Я не очень хорошо понимаю метод множителей Лагранжа}
+    \begin{equation}
+        \left(-\frac{\nabla^2}{2} + v(\vec{r}) + v_H(n;\vec{r}) + \eps_{xc}(n;\vec{r})\right)\phi = \eps\phi
+    \end{equation}
 \end{document}
