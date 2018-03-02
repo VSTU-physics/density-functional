@@ -1,8 +1,11 @@
 \documentclass[article]{ncc}
-\usepackage[russian]{babel}
+\usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
 \usepackage{amsmath}
 \usepackage{physics}
+\usepackage[square, numbers, sort&compress]{natbib}
+\usepackage[colorlinks]{hyperref}
 \newcommand{\eps}{\varepsilon}
 \renewcommand{\phi}{\varphi}
 \renewcommand{\vec}{\boldsymbol}
@@ -18,6 +21,20 @@
     \end{description}
     \section{Основные положения}
     \subsection{Теория Хоэнберга-Кона}
+    В своей работе \cite{Hohenberg-Kohn} сформулировали 2 теоремы, на которых построена вся теория функционала плотности.
+
+    \begin{theorem}
+        Для любой системы, находящейся во внешнем потенциале \( V(\vec{r}) \), этот внешний потенциал является (однозначным) функционалом электронной плотности основного состояния.
+    \end{theorem}
+
+    \begin{theorem}
+        Энергия системы является функционалом электронной плотности. Энергия основного состояния является наименьшим значением этого функционала.
+    \end{theorem}
+
+    См. также:
+    \begin{enumerate}
+        \item \url{http://www.physics.metu.edu.tr/~hande/teaching/741-lectures/lecture-06.pdf}
+    \end{enumerate}
     \subsection{Уравнения Кона-Шема}
     Согласно теории Хоэнберга-Кона, полная энергия системы является функционалом электронной плотности:
     \begin{equation}
@@ -59,4 +76,7 @@
     \begin{equation}
         \left(-\frac{\nabla^2}{2} + v(\vec{r}) + v_H(n;\vec{r}) + \eps_{xc}(n;\vec{r})\right)\phi = \eps\phi
     \end{equation}
+    \begin{thebibliography}{99}
+        \bibitem{Hohenberg-Kohn} \textbf{P. Hohenberg and W. Kohn} Inhomogeneous Electron Gas // Phys. Rev. ~--- V. 136. ~--- P. B864.
+    \end{thebibliography}
 \end{document}

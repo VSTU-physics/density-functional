@@ -1,0 +1,8 @@
+*.fls
+*.log
+*.out
+*.fdb_*
+*.aux
+*.synctex.gz
+*.toc
+density-functional-theory.pdf
