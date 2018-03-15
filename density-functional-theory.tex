@@ -1,8 +1,12 @@
-\documentclass[article]{ncc}
+\documentclass[11pt,russian]{ncc}
+\ToCenter[h]{160mm}{240mm}
+\usepackage[headings]{ncchdr}
+\sectionstyle{center}
+\indentaftersection
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
-\usepackage{amsmath}
+\usepackage{amsmath,amssymb}
 \usepackage{physics}
 \usepackage[square, numbers, sort&compress]{natbib}
 \usepackage[colorlinks]{hyperref}
@@ -71,12 +75,66 @@
         E[n] = T_s[n] + V[n] + V_H[n] + E_{xc}[n],
     \end{equation}
     где последнее слагаемое учитывает обмено-корреляционные эффекты и выбирается от балды.
-    
+
     Минимизировать непосредственно функционал можно, но не очень удобно. Поэтому проварьируем его и получим уравнения Кона-Шема\footnote{Как математически корректно сделать переход? Я не очень хорошо понимаю метод множителей Лагранжа}
     \begin{equation}
         \left(-\frac{\nabla^2}{2} + v(\vec{r}) + v_H(n;\vec{r}) + \eps_{xc}(n;\vec{r})\right)\phi = \eps\phi
     \end{equation}
+
+    \subsection{Представление плоских волн}
+    Для периодических систем волновая функция будет иметь вид блоховской функции:
+    \begin{equation}
+        \phi_{n\vec{k}} = e^{i\vec{k}\cdot\vec{r}} u_{n\vec{k}}(\vec{r}),
+    \end{equation}
+    где функция \(u_{n\vec{k}}(\vec{r})\) это периодическая функция с периодом элементарной ячейки. Она может быть представлена в виде ряда Фурье:
+    \begin{equation}
+        u_{n\vec{k}}(\vec{r}) = \sum_{\vec{G}} c_{n\vec{k}}(\vec{G}) e^{i\vec{G}\cdot\vec{r}}.
+    \end{equation}
+    Подставляя в уравнение, получаем
+    \begin{equation}
+        \left(-\frac{\nabla^2}{2} + v(\vec{r}) + v_H(n;\vec{r}) + \eps_{xc}(n;\vec{r})\right)\sum_{\vec{G}'} c_{n\vec{k}}(\vec{G}') e^{i(\vec{G}' + \vec{k})\cdot\vec{r}} = \eps\sum_{\vec{G}'} c_{n\vec{k}}(\vec{G}') e^{i(\vec{G}' + \vec{k})\cdot\vec{r}}.
+    \end{equation}
+    Домножим на \( e^{-i(\vec{G}+\vec{k})\cdot\vec{r}} \) и проинтегрируем по ячейке:
+    \begin{equation}
+        \frac{G^2+k^2}{2}  c_{n\vec{k}}(\vec{G}) + \frac{1}{\Omega}\int_\Omega \left(v(\vec{r}) + v_H(n;\vec{r}) + \eps_{xc}(n;\vec{r})\right)\sum_{\vec{G}'} c_{n\vec{k}}(\vec{G}') e^{i(\vec{G}' - \vec{G})\cdot\vec{r}} d\vec{r} = \eps c_{n\vec{k}}(\vec{G})
+    \end{equation}
+    \begin{equation}
+        \frac{G^2+k^2}{2}  c_{n\vec{k}}(\vec{G}) + \frac{1}{\Omega}\sum_{\vec{G}'}\left[\tilde{v}(\vec{G}-\vec{G}') + \tilde{v}_H(n;\vec{G} - \vec{G}') + \tilde{\eps}_{xc}(n;\vec{G} - \vec{G}')\right] c_{n\vec{k}}(\vec{G}') = \eps c_{n\vec{k}}(\vec{G})
+    \end{equation}
+    Теперь перед нами встаёт задача определения коэффициентов Фурье потенциала решётки, потенциала Хартри и обменно-корреляционного потенциала.
+
+    Рассмотрим сначала потенциал решётки. Для простоты будем считать, что в элементарной ячейке находится только 1 атом, радиус-вектор которого в системе координат его ячейки \( \vec{\xi} \). Определим Фурье-коэффициенты:
+    \begin{equation}
+        \tilde{v}(\vec{G}) = \int_\text{cell} v(\vec{r}) e^{-i\vec{G}\cdot\vec{r}}\,d\vec{r} = Z \int_\text{cell} \sum_{i} \frac{e^{-i\vec{G}\cdot\vec{r}}}{|\vec{r} - \vec{r}_i|}\,d\vec{r}.
+    \end{equation}
+    Обозначим \(\vec{R}_i\) начало координат i-ой ячейки, тогда \( \vec{r}_i = \vec{R}_i + \vec{\xi} \) и выполняя замену переменного, получаем
+    \begin{equation}
+        \tilde{v}(\vec{G}) = Z \sum_{i} \int_\text{i-cell} \frac{e^{-i\vec{G}\cdot(\vec{r} - \vec{R}_i)}}{|\vec{r} - \vec{\rho}|}\,d\vec{r} =
+        Z \int_{\mathbb{R}^3}\frac{e^{-i\vec{G}\cdot\vec{r}}}{|\vec{r} - \vec{\rho}|}\,d\vec{r} = \frac{4\pi Z}{G^2}e^{i\vec{G}\cdot\vec{\rho}}.
+    \end{equation}
+
+    Совершенно аналогичные рассуждения приводят нас к тому, что
+    \begin{equation}
+        \tilde{v}_H(\vec{G}) = \frac{4\pi\tilde{n}(\vec{G})}{G^2},\quad
+        \tilde{n}(\vec{G}) = \int_\text{cell} n(\vec{r}) e^{-i\vec{G}\cdot\vec{r}}\,d\vec{r}
+    \end{equation}
+
     \begin{thebibliography}{99}
-        \bibitem{Hohenberg-Kohn} \textbf{P. Hohenberg and W. Kohn} Inhomogeneous Electron Gas // Phys. Rev. ~--- V. 136. ~--- P. B864.
+        \bibitem{Hohenberg-Kohn} \textbf{P. Hohenberg and W. Kohn} Inhomogeneous Electron Gas // Phys. Rev.~--- V. 136.~--- P. B864.
     \end{thebibliography}
+
+    \appendix
+    \section{Преобразование Фурье и уравнение Лапласа}
+    Рассмотрим интеграл
+    \begin{equation}
+        f(\vec{k}) = \int_{\mathbb{R}^3} \frac{e^{-i\vec{k}\cdot\vec{r}}}{r}\,d\vec{r}.
+    \end{equation}
+    Проще всего его не брать вовсе, а вспомнить, что функция \( u = 1/r \) является решением уравнения Лапласа
+    \begin{equation}
+        \Delta u = -4\pi\delta(\vec{r}).
+    \end{equation}
+    Выполним преобразование Фурье и получим
+    \begin{equation}
+        -k^2 f(\vec{k}) = -4\pi,\quad f(\vec{k}) = \frac{4\pi}{k^2}.
+    \end{equation}
 \end{document}
