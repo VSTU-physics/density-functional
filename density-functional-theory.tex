@@ -6,6 +6,10 @@
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
+\makeatletter
+\let \@Asbuk\russian@Alph
+\let \@asbuk\russian@alph
+\makeatother
 \usepackage{amsmath,amssymb}
 \usepackage{physics}
 \usepackage[square, numbers, sort&compress]{natbib}
@@ -76,10 +80,12 @@
     \end{equation}
     где последнее слагаемое учитывает обмено-корреляционные эффекты и выбирается от балды.
 
-    Минимизировать непосредственно функционал можно, но не очень удобно. Поэтому проварьируем его и получим уравнения Кона-Шема\footnote{Как математически корректно сделать переход? Я не очень хорошо понимаю метод множителей Лагранжа}
+    Минимизировать непосредственно функционал можно, но не очень удобно. Поэтому проварьируем его и получим уравнения Кона-Шема. Для этого представим функционал электронной плотности как функционал, зависящий от \( N \) функций \(\phi_i\) с \( N \) дополнительными условиями \( \bra{\phi_i}\ket{\phi_i} = 1 \). Метод множителей Лагранжа приводит нас к уравнению на собственные значения
     \begin{equation}
-        \left(-\frac{\nabla^2}{2} + v(\vec{r}) + v_H(n;\vec{r}) + \eps_{xc}(n;\vec{r})\right)\phi = \eps\phi
+        \left(-\frac{\nabla^2}{2} + v(\vec{r}) + v_H(n;\vec{r}) + \eps_{xc}(n;\vec{r})\right)\phi = \eps\phi.
     \end{equation}
+
+    Так как перед нами стоит задача отыскания электронной плотности основного состояния, то нас инересуют наименьшие собственные значения и соответствующие им собственные функции.
 
     \subsection{Представление плоских волн}
     Для периодических систем волновая функция будет иметь вид блоховской функции:
@@ -109,14 +115,19 @@
     \end{equation}
     Обозначим \(\vec{R}_i\) начало координат i-ой ячейки, тогда \( \vec{r}_i = \vec{R}_i + \vec{\xi} \) и выполняя замену переменного, получаем
     \begin{equation}
-        \tilde{v}(\vec{G}) = Z \sum_{i} \int_\text{i-cell} \frac{e^{-i\vec{G}\cdot(\vec{r} - \vec{R}_i)}}{|\vec{r} - \vec{\rho}|}\,d\vec{r} =
-        Z \int_{\mathbb{R}^3}\frac{e^{-i\vec{G}\cdot\vec{r}}}{|\vec{r} - \vec{\rho}|}\,d\vec{r} = \frac{4\pi Z}{G^2}e^{i\vec{G}\cdot\vec{\rho}}.
+        \tilde{v}(\vec{G}) = Z \sum_{i} \int_\text{i-cell} \frac{e^{-i\vec{G}\cdot(\vec{r} - \vec{R}_i)}}{|\vec{r} - \vec{\xi}|}\,d\vec{r} =
+        Z \int_{\mathbb{R}^3}\frac{e^{-i\vec{G}\cdot\vec{r}}}{|\vec{r} - \vec{\xi}|}\,d\vec{r} = \frac{4\pi Z}{G^2}e^{i\vec{G}\cdot\vec{\xi}}.
     \end{equation}
 
     Совершенно аналогичные рассуждения приводят нас к тому, что
     \begin{equation}
         \tilde{v}_H(\vec{G}) = \frac{4\pi\tilde{n}(\vec{G})}{G^2},\quad
         \tilde{n}(\vec{G}) = \int_\text{cell} n(\vec{r}) e^{-i\vec{G}\cdot\vec{r}}\,d\vec{r}
+    \end{equation}
+
+    В силу сложности вида обменно-корреляционного потенциала, Фурье-коэффициенты придётся считать численно:
+    \begin{equation}
+        \tilde{\eps}_{xc}(\vec{G}) = \int_\text{cell} \eps_{xc}(n;\vec{r})e^{-i\vec{G}\cdot\vec{r}}\,d\vec{r}
     \end{equation}
 
     \begin{thebibliography}{99}
